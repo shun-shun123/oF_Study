@@ -25,6 +25,7 @@ void ofApp::update(){
 void ofApp::draw(){
     cam.begin();
     for (int i = 0; i < 100; ++i) {
+        ofSetColor(color[i]);
         box[i].draw();
     }
     cam.end();
@@ -61,6 +62,7 @@ void ofApp::mouseReleased(int x, int y, int button){
     for (int i = 0; i < 100; ++i) {
         accel[i] = (startMouse - endMouse);
         accel[i] *= ofRandom(0.8, 1.2);
+        color[i].setHsb(ofRandom(0, 255), 255, 255);
     }
 }
 

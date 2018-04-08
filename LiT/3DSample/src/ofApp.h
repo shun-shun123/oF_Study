@@ -27,5 +27,6 @@ class ofApp : public ofBaseApp{
     ofVec3f accel[100];
     ofVec3f endMouse;
     ofVec3f startMouse;
+    ofColor color[100];
     ofEasyCam cam;
 };
