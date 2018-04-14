@@ -82,7 +82,7 @@ void ofApp::spaceAction() {
     
     ofPath curve;
     curve.setColor(ofColor::fromHex(0x000000, 100));
-    curve.setCurveResolution(94);
+    curve.setCircleResolution(271);
     curve.arc(center, out_radius, out_radius, 0, angle + 1, false);
     curve.draw();
 }
