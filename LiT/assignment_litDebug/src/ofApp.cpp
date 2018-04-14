@@ -6,14 +6,8 @@ void ofApp::setup(){
     ofBackground(255);
     ofSetFrameRate(60);
     ofSetCircleResolution(64);
-    
-    Xaxis = ofVec2f(1, 0);
-    rect_size = ofGetWidth() / 30.0;
-    center_x = ofGetWidth() / 2.0;
-    center_y = ofGetHeight() / 2.0;
-    center = ofVec2f(center_x, center_y);
-    mouse = ofVec2f(mouseX, mouseY);
-    isSpaceClicked = false;
+    // 変数の初期化
+    init();
 }
 
 //--------------------------------------------------------------
@@ -27,6 +21,14 @@ void ofApp::draw(){
     drawAim();
     drawCircle();
     ofSetColor(0);
+}
+
+//--------------------------------------------------------------
+void ofApp::init() {
+    rect_size = ofGetWidth() / 30.0;
+    center = ofVec2f(ofGetWidth() / 2, ofGetHeight() / 2);
+    mouse = ofVec2f(mouseX, mouseY);
+    isSpaceClicked = false;
 }
 
 //--------------------------------------------------------------
@@ -53,29 +55,36 @@ void ofApp::drawAim() {
 
 //--------------------------------------------------------------
 void ofApp::drawCircle() {
-    out_radius = ofDist(center_x, center_y, mouse.x, mouse.y);
-    if (isSpaceClicked) {
-        out_radius += ofRandom(-6, 6);
-        spaceAction();
-    }
+    out_radius = center.distance(mouse);
     color = ofColor::fromHsb(hueCalc(), 255, 255);
     ofPushStyle();
     ofSetColor(color);
     ofDrawLine(center, mouse);
-    ofDrawCircle(center_x, center_y, out_radius * 0.24);
+    ofDrawCircle(center, out_radius * 0.24);
     ofNoFill();
     ofSetColor(color);
-    ofDrawCircle(center_x, center_y, out_radius);
+    ofDrawCircle(center, out_radius);
     ofPopStyle();
+    if (isSpaceClicked) {
+        spaceAction();
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::spaceAction() {
-    ofVec2f adjust = ofVec2f(10, 10);
-    string info_radius = "radius : " + to_string(out_radius);
-    string info_angle = "angle : " + to_string(angle);
-    string info = info_radius + "\n" + info_angle;
+    out_radius += ofRandom(-6, 6);
+    char info_radius[30];
+    char info_angle[30];
+    sprintf(info_radius, "radius : %.3f\n", out_radius);
+    sprintf(info_angle, "angle : %.3f", angle);
+    string info = strcat(info_radius, info_angle);
     ofDrawBitmapString(info, mouse + adjust);
+    
+    ofPath curve;
+    curve.setColor(ofColor::fromHex(0x000000, 100));
+    curve.setCurveResolution(94);
+    curve.arc(center, out_radius, out_radius, 0, angle + 1, false);
+    curve.draw();
 }
 
 //--------------------------------------------------------------
@@ -95,7 +104,6 @@ void ofApp::keyPressed(int key){
     switch (key) {
         case ' ':
             isSpaceClicked = (isSpaceClicked + 1) % 2;
-            cout << isSpaceClicked << endl;
             break;
     }
 }

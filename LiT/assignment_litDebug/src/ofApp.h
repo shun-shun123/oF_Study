@@ -22,17 +22,16 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
     
     private:
+        void init();
         void setupBG(float rect_size);
         void drawAim();
         void drawCircle();
         float hueCalc();
         void spaceAction();
-        float rect_size;
-        float center_x, center_y;
-        float angle;
-        float out_radius;
-        ofVec2f mouse;
-        ofVec2f Xaxis, direction, center;
+        float rect_size, angle, out_radius;
+        ofVec2f mouse, direction, center;
+        const ofVec2f Xaxis = ofVec2f(1, 0);
+        const ofVec2f adjust = ofVec2f(20, 20);
         ofColor color;
         bool isSpaceClicked;
 };
