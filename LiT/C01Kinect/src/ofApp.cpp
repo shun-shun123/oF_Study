@@ -49,7 +49,7 @@ void ofApp::draw(){
         unsigned char * maskedPixels = maskedImage.getPixels().getData(); // マスク画像の配列データ
         for (int i = 0; i < kinect.width * kinect.height; i++) {
             if ((255 - far.get() < depthPixels[i]) && (depthPixels[i] < 255 - near.get())) { // 指定範囲内の距離のpixelの時
-                maskedPixels[i * 3] = cameraPixels[i * 3 + 1]; // RGBカメラのpixelをコピー(red)
+                maskedPixels[i * 3] = cameraPixels[i * 3]; // RGBカメラのpixelをコピー(red)
                 maskedPixels[i * 3 + 1] = cameraPixels[i * 3 + 1]; // copy RGB camera's pixel(green)
                 maskedPixels[i * 3 + 2] = cameraPixels[i * 3 + 2]; // copy RGB camera'x pixel(blue)
             } else { // allocate 000(RGB) which is black
