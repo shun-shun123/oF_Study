@@ -56,6 +56,9 @@ void ofApp::drawAim() {
 //--------------------------------------------------------------
 void ofApp::drawCircle() {
     out_radius = center.distance(mouse);
+    if (isSpaceClicked) {
+        out_radius += ofRandom(-6, 6);
+    }
     color = ofColor::fromHsb(hueCalc(), 255, 255);
     ofPushStyle();
     ofSetColor(color);
@@ -72,11 +75,10 @@ void ofApp::drawCircle() {
 
 //--------------------------------------------------------------
 void ofApp::spaceAction() {
-    out_radius += ofRandom(-6, 6);
     char info_radius[30];
     char info_angle[30];
     sprintf(info_radius, "radius : %.3f\n", out_radius);
-    sprintf(info_angle, "angle : %.3f", angle);
+    sprintf(info_angle, "angle : %.3f", 360 - angle);
     string info = strcat(info_radius, info_angle);
     ofDrawBitmapString(info, mouse + adjust);
     
